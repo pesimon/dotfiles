@@ -1,0 +1,28 @@
+#unbind-key -a
+
+set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
+set-environment -g 'SSH_AUTH_SOCK' ~/.ssh/ssh_auth_sock
+
+# mouse navigation
+setw -g mode-mouse on
+set -g mouse-select-pane on
+set -g mouse-resize-pane on
+set -g mouse-select-window on
+
+# http://superuser.com/questions/238702/maximizing-a-pane-in-tmux
+unbind +
+bind + new-window -d -n tmux-zoom 'clear && echo TMUX ZOOM && read' \; swap-pane -s tmux-zoom.0 \; select-window -t tmux-zoom
+unbind -
+bind - last-window \; swap-pane -s tmux-zoom.0 \; kill-window -t tmux-zoom
+
+# Remapping Movement Keys
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# VI mod in Copy
+setw -g mode-keys vi
+
+setw -g monitor-activity on
+set -g visual-activity on
